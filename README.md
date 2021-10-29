@@ -19,7 +19,7 @@ The game ends when an asteroid hits the earth.
 ## Backlog
 
 - add music
-- Multiple levels to increase the difficulty- more than asteroids appear which should not smashed
+- Multiple levels to increase the difficulty- more asteroids appear which should not smashed
 
 ## Data Structure
 
@@ -50,15 +50,15 @@ The game ends when an asteroid hits the earth.
 - draw () {}
 - move () {}
 - speed () {}
-  -amount(){}
+- amount(){}
 - checkScreenCollision () {}
 
 # earth.js
 
-- Tentacle () {
+- Earth () {
   this.x;
   this.y;
-  this.size
+
   }
 
 - draw () {}
