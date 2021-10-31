@@ -1,0 +1,76 @@
+body {
+  color: white;
+  font-family: "Roboto Mono", monospace;
+  height: 100%;
+  margin: 0;
+  background-image: url("./images/space-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.startScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-startcenter;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+h1 {
+  letter-spacing: 0.8rem;
+}
+
+.startText {
+  width: 45%;
+  text-align: center;
+  line-height: 1.9rem;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 0.5rem;
+  width: 10%;
+  height: 5%;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 900;
+  letter-spacing: 0.4rem;
+  background-color: black;
+  border: 1px white solid;
+  border-radius: 2rem;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.5);
+  transition: all 500ms ease-out;
+  color: white;
+}
+button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+}
+
+.gameOver {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+#restart {
+  margin: 1.5rem 0;
+}
+
+ol {
+  padding: 0;
+  letter-spacing: 0.2rem;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 600;
+}
+
+#gameScreen {
+  margin: 0 auto;
+}
+
+.gameOver h1 {
+  letter-spacing: 0.3rem;
+}

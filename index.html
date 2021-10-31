@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="startScreen">
+        <h1>SURVIVING EARTH</h1>
+        <p class="startText">
+          Asteroids are targeting the earth and it needs to be protected! Only
+          you can save the earth of asteroid impacts by smashing them. So let's
+          go and save the world!
+        </p>
+        <button id="start">START</button>
+      </div>
+    </div>
+    <canvas id="gameScreen" width="868" height="500"></canvas>
+
+    <div class="gameOver">
+      <h1>GAME OVER</h1>
+      <p class="restartText">
+        Oh no, the earth has been destroyed. Next time try harder.
+      </p>
+      <button id="restart">RESTART</button>
+      <ol>
+        YOUR SCORE
+      </ol>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
