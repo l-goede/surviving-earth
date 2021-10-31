@@ -24,16 +24,12 @@ asteroid.src = "./images/fire-asteroid.png";
 //                            VARIABLES
 //----------------------------------------------------------------
 
-// let intervalId = 0;
-// let isGameOver = false;
+let intervalId = 0;
+let isGameOver = false;
 let asteroidX = 50,
   asteroidY = 50;
-//let birdY = 30,
-// birdX = 30;
-// let foregroundY = canvas.height - fg.height;
-// let pipeX = 200;
-// let decPipe = 2;
-// let score = 0;
+let incX = 2,
+  incY = 2;
 
 //----------------------------------------------------------------
 //                           FUNCTIONS
@@ -53,12 +49,25 @@ function handleStart() {
   startScreen.style.display = "none";
   canvas.style.display = "block";
   drawEarth();
-  drawAsteroid();
+  game();
 }
 
 function showGameOver() {
   canvas.style.display = "none";
   gameOverScreen.style.display = "block";
+}
+
+function game() {
+  drawAsteroid();
+  asteroidX = asteroidX + incX;
+  asteroidY = asteroidY + incY;
+
+  if (isGameOver) {
+    cancelAnimationFrame(intervalId);
+    showGameOver();
+  } else {
+    intervalId = requestAnimationFrame(game);
+  }
 }
 
 //----------------------------------------------------------------
