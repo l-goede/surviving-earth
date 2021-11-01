@@ -80,11 +80,8 @@ function showGameOver() {
   gameOverScreen.style.display = "block";
 }
 let asteroids = [
-  { x: 0, y: 0 },
-  { x: 300, y: 0 },
-  { x: 100, y: -100 },
-  { x: 20, y: -300 },
-  { x: 0, y: 0 },
+  { x: 0, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
+  { x: 200, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
 ];
 
 let myEvent = {};
@@ -100,8 +97,11 @@ function game() {
       asteroidWidth,
       asteroidHeight
     );
-    asteroids[i].x += Math.cos((earthWidth * Math.PI) / 180);
-    asteroids[i].y += Math.sin((earthHeight * Math.PI) / 180);
+
+    asteroids[i].x +=
+      asteroids[i].speedX * Math.cos((asteroids[i].direction * Math.PI) / 180);
+    asteroids[i].y +=
+      asteroids[i].speedY * Math.cos((asteroids[i].direction * Math.PI) / 180);
 
     if (isMousePressed) {
       const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
@@ -110,26 +110,28 @@ function game() {
       let canvasY = myEvent.pageY - canvasTop;
       if (
         canvasX > asteroids[i].x &&
-        canvasX < asteroids[i].x + asteroid.width &&
+        canvasX < asteroids[i].x + asteroidWidth &&
         canvasY > asteroids[i].y &&
-        canvasY < asteroids[i].y + asteroid.height
+        canvasY < asteroids[i].y + asteroidHeight
       ) {
         score++;
-        asteroids[i].x = 0;
-        asteroids[i].y = -30;
+        asteroids[i].speedX = Math.floor(Math.random() * 4);
+        asteroids[i].speedY = Math.floor(Math.random() * 4);
+        asteroids[i].x = -Math.floor((Math.random() * canvas.width) / 5);
+        asteroids[i].y = -Math.floor((Math.random() * canvas.height) / 5);
       }
+    }
+    // collision with earth
+    if (
+      asteroids[i].x + asteroidWidth > earthX &&
+      asteroids[i].x < earthX + earthWidth &&
+      asteroids[i].y + asteroidHeight > earthY &&
+      asteroids[i].y < earthY + earthHeight
+    ) {
+      isGameOver = true;
     }
   }
 
-  // collision with earth
-  if (
-    asteroidX + asteroidWidth > earthX &&
-    asteroidX < earthX + earthWidth &&
-    asteroidY + asteroidHeight > earthHeight &&
-    asteroidY < earthY + earthHeight
-  ) {
-    isGameOver = true;
-  }
   ctx.fillStyle = "white";
   ctx.fillText(`Your score:${score}`, 200, 500);
 
