@@ -40,6 +40,8 @@ earth.src = "./images/earth.png";
 let asteroid = new Image();
 asteroid.src = "./images/asteroid.png";
 
+let dust = new Image();
+dust.src = "./images/dust.png";
 //----------------------------------------------------------------
 //                            VARIABLES
 //----------------------------------------------------------------
@@ -55,9 +57,9 @@ let asteroidWidth = 40,
   asteroidHeight = 40;
 let earthWidth = 100,
   earthHeight = 100;
+let speedX = 0.9,
+  speedY = 0.9;
 
-let incX = 0.6,
-  incY = 0.6;
 let isMousePressed = false;
 
 //----------------------------------------------------------------
@@ -67,6 +69,9 @@ let isMousePressed = false;
 function drawEarth() {
   ctx.drawImage(earth, earthX, earthY, earthWidth, earthHeight);
 }
+//function drawDust(){
+//  ctx.drawImage(dust, dustX, dustY,dustWidth, dustHeight);
+//}
 
 function handleStart() {
   startScreen.style.display = "none";
@@ -80,8 +85,21 @@ function showGameOver() {
   gameOverScreen.style.display = "block";
 }
 let asteroids = [
-  { x: 0, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
+  {
+    x: 0,
+    y: 0,
+    speedX: Math.round(Math.random() * 4),
+    speedY: Math.round(Math.random() * 4),
+    direction: Math.random() * 360,
+  },
   { x: 200, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
+  {
+    x: Math.random() * 300,
+    y: Math.random() * 300,
+    speedX: 1,
+    speedY: 1,
+    direction: Math.random() * 360,
+  },
 ];
 
 let myEvent = {};
@@ -98,10 +116,11 @@ function game() {
       asteroidHeight
     );
 
-    asteroids[i].x +=
-      asteroids[i].speedX * Math.cos((asteroids[i].direction * Math.PI) / 180);
-    asteroids[i].y +=
-      asteroids[i].speedY * Math.cos((asteroids[i].direction * Math.PI) / 180);
+    let angleX = earthX - asteroids[i].x;
+    let angleY = earthY - asteroids[i].y;
+    let angle = Math.atan2(angleY, angleX);
+    asteroids[i].x += asteroids[i].speedX * Math.cos(angle);
+    asteroids[i].y += asteroids[i].speedY * Math.sin(angle);
 
     if (isMousePressed) {
       const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
@@ -115,10 +134,21 @@ function game() {
         canvasY < asteroids[i].y + asteroidHeight
       ) {
         score++;
-        asteroids[i].speedX = Math.floor(Math.random() * 4);
-        asteroids[i].speedY = Math.floor(Math.random() * 4);
-        asteroids[i].x = -Math.floor((Math.random() * canvas.width) / 5);
-        asteroids[i].y = -Math.floor((Math.random() * canvas.height) / 5);
+
+        asteroids[i].speedX = Math.round(Math.random() * 3.5);
+        asteroids[i].speedY = Math.round(Math.random() * 3.5);
+        // asteroids[i].x = -Math.round((Math.random() * canvas.width) / 5);
+        // asteroids[i].y = -Math.round((Math.random() * canvas.height) / 5);
+        if (Math.random() < 0.5) {
+          asteroids[i].x = -asteroidWidth;
+          asteroids[i].y =
+            Math.round(Math.random() * canvas.height) + canvas.height;
+        } else {
+          asteroids[i].y = -asteroidHeight;
+
+          asteroids[i].x =
+            Math.round(Math.random() * canvas.width) + canvas.width;
+        }
       }
     }
     // collision with earth
