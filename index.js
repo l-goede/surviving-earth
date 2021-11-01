@@ -53,8 +53,8 @@ let earthX = 380,
   earthY = 200;
 let asteroidX = 250,
   asteroidY = 50;
-let asteroidWidth = 40,
-  asteroidHeight = 40;
+let asteroidWidth = 80,
+  asteroidHeight = 80;
 let earthWidth = 100,
   earthHeight = 100;
 let speedX = 0.9,
@@ -102,8 +102,24 @@ function showGameOver() {
 //   },
 // ];
 let asteroids = [];
-
 let myEvent = {};
+
+for (let i = 0; i < 5; i++) {
+  let randomAsteroid = {
+    speedX: Math.round(Math.random() * 4),
+    speedY: Math.round(Math.random() * 4),
+    direction: Math.random() * 360,
+  };
+  if (Math.random() < 0.5) {
+    randomAsteroid.x = -asteroidWidth;
+    randomAsteroid.y =
+      Math.round(Math.random() * canvas.height) + canvas.height;
+  } else {
+    randomAsteroid.y = -asteroidHeight;
+    randomAsteroid.x = Math.round(Math.random() * canvas.width) + canvas.width;
+  }
+  asteroids.push(randomAsteroid);
+}
 
 function game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -116,12 +132,6 @@ function game() {
       asteroidWidth,
       asteroidHeight
     );
-
-    let randomAsteroid = {
-      speedX: Math.round(Math.random() * 4),
-      speedY: Math.round(Math.random() * 4),
-      direction: Math.random() * 360,
-    };
 
     let angleX = earthX - asteroids[i].x;
     let angleY = earthY - asteroids[i].y;
@@ -148,13 +158,11 @@ function game() {
         // asteroids[i].y = -Math.round((Math.random() * canvas.height) / 5);
         if (Math.random() < 0.5) {
           asteroids[i].x = -asteroidWidth;
-          asteroids[i].y =
-            Math.round(Math.random() * canvas.height) + canvas.height;
+          asteroids[i].y = Math.round(Math.random() * canvas.height);
         } else {
           asteroids[i].y = -asteroidHeight;
 
-          asteroids[i].x =
-            Math.round(Math.random() * canvas.width) + canvas.width;
+          asteroids[i].x = Math.round(Math.random() * canvas.width);
         }
       }
     }
