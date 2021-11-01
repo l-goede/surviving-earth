@@ -29,8 +29,6 @@ let canvas = document.querySelector("#gameScreen");
 canvas.style.border = "2px solid red";
 let ctx = canvas.getContext("2d");
 ctx.fillRect(0, 0, canvas.width, canvas.height);
-const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
-const canvasTop = canvas.offsetTop + canvas.clientTop;
 
 //----------------------------------------------------------------
 //                            IMAGES
@@ -48,24 +46,26 @@ asteroid.src = "./images/asteroid.png";
 
 let intervalId = 0;
 let isGameOver = false;
+let score = 0;
 let earthX = 380,
   earthY = 200;
 let asteroidX = 250,
   asteroidY = 50;
+let asteroidWidth = 40,
+  asteroidHeight = 40;
+let earthWidth = 100,
+  earthHeight = 100;
 
-let incX = 1,
-  incY = 1;
+let incX = 0.6,
+  incY = 0.6;
+let isMousePressed = false;
 
 //----------------------------------------------------------------
 //                           FUNCTIONS
 //----------------------------------------------------------------
 
 function drawEarth() {
-  ctx.drawImage(earth, earthX, earthY, 100, 100);
-}
-
-function drawAsteroid() {
-  ctx.drawImage(asteroid, asteroidX, asteroidY, 40, 40);
+  ctx.drawImage(earth, earthX, earthY, earthWidth, earthHeight);
 }
 
 function handleStart() {
@@ -79,29 +79,59 @@ function showGameOver() {
   canvas.style.display = "none";
   gameOverScreen.style.display = "block";
 }
+let asteroids = [
+  { x: 0, y: 0 },
+  { x: 300, y: 0 },
+  { x: 100, y: -100 },
+  { x: 20, y: -300 },
+  { x: 0, y: 0 },
+];
+
+let myEvent = {};
 
 function game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawEarth();
-  drawAsteroid();
+  for (i = 0; i < asteroids.length; i++) {
+    ctx.drawImage(
+      asteroid,
+      asteroids[i].x,
+      asteroids[i].y,
+      asteroidWidth,
+      asteroidHeight
+    );
+    asteroids[i].x += Math.cos((earthWidth * Math.PI) / 180);
+    asteroids[i].y += Math.sin((earthHeight * Math.PI) / 180);
 
-  asteroidX = asteroidX + incX;
-  asteroidY = asteroidY + incY;
-
-  //Smahing asteroid
-  canvas.addEventListener((event) => {
-    let canvasX = event.pageX - canvasLeft;
-    let canvasY = event.pageY - canvasTop;
-  });
+    if (isMousePressed) {
+      const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
+      const canvasTop = canvas.offsetTop + canvas.clientTop;
+      let canvasX = myEvent.pageX - canvasLeft;
+      let canvasY = myEvent.pageY - canvasTop;
+      if (
+        canvasX > asteroids[i].x &&
+        canvasX < asteroids[i].x + asteroid.width &&
+        canvasY > asteroids[i].y &&
+        canvasY < asteroids[i].y + asteroid.height
+      ) {
+        score++;
+        asteroids[i].x = 0;
+        asteroids[i].y = -30;
+      }
+    }
+  }
 
   // collision with earth
   if (
-    (asteroidX + asteroid.width > earthX && asteroidX < earthX + earth.width) ||
-    (asteroidY + asteroid.height > earth.height &&
-      asteroidY < earthY + earth.height)
+    asteroidX + asteroidWidth > earthX &&
+    asteroidX < earthX + earthWidth &&
+    asteroidY + asteroidHeight > earthHeight &&
+    asteroidY < earthY + earthHeight
   ) {
     isGameOver = true;
   }
+  ctx.fillStyle = "white";
+  ctx.fillText(`Your score:${score}`, 200, 500);
 
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
@@ -127,4 +157,14 @@ startBtn.addEventListener("click", () => {
 
 restartBtn.addEventListener("click", () => {
   handleStart();
+});
+
+//Smahing asteroid
+canvas.addEventListener("mousedown", (event) => {
+  myEvent = event;
+  isMousePressed = true;
+});
+
+canvas.addEventListener("mouseup", (event) => {
+  isMousePressed = false;
 });
