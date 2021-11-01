@@ -84,23 +84,24 @@ function showGameOver() {
   canvas.style.display = "none";
   gameOverScreen.style.display = "block";
 }
-let asteroids = [
-  {
-    x: 0,
-    y: 0,
-    speedX: Math.round(Math.random() * 4),
-    speedY: Math.round(Math.random() * 4),
-    direction: Math.random() * 360,
-  },
-  { x: 200, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
-  {
-    x: Math.random() * 300,
-    y: Math.random() * 300,
-    speedX: 1,
-    speedY: 1,
-    direction: Math.random() * 360,
-  },
-];
+// let asteroids = [
+//   {
+//     x: 0,
+//     y: 0,
+//     speedX: Math.round(Math.random() * 4),
+//     speedY: Math.round(Math.random() * 4),
+//     direction: Math.random() * 360,
+//   },
+//   { x: 200, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
+//   {
+//     x: Math.random() * 300,
+//     y: Math.random() * 300,
+//     speedX: 1,
+//     speedY: 1,
+//     direction: Math.random() * 360,
+//   },
+// ];
+let asteroids = [];
 
 let myEvent = {};
 
@@ -115,6 +116,12 @@ function game() {
       asteroidWidth,
       asteroidHeight
     );
+
+    let randomAsteroid = {
+      speedX: Math.round(Math.random() * 4),
+      speedY: Math.round(Math.random() * 4),
+      direction: Math.random() * 360,
+    };
 
     let angleX = earthX - asteroids[i].x;
     let angleY = earthY - asteroids[i].y;
