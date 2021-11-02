@@ -7,7 +7,7 @@ let startBtn = document.querySelector("#start");
 let restartBtn = document.querySelector("#restart");
 let gameOverScreen = document.querySelector(".gameOverScr");
 let canvas = document.querySelector("#gameScreen");
-canvas.style.background = "black";
+canvas.style.background = "./images/space-background.png";
 let ctx = canvas.getContext("2d");
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -27,11 +27,11 @@ dust.src = "./images/dust.png";
 //----------------------------------------------------------------
 //                            AUDIO
 //----------------------------------------------------------------
-let gameAudio = new Audio("https://youtu.be/GeEbOKKcW-0");
-gameAudio.volume = 0.1;
-let hitAsteroidAudio = new Audio("https://youtu.be/bhZs3ALdL7Y");
+let gameAudio = new Audio("./gameAudio.mp3");
+gameAudio.volume = 0.04;
+let hitAsteroidAudio = new Audio("./hitAsteroidAudio.mp3");
 hitAsteroidAudio.volume = 0.2;
-let gameOverAudio = new Audio("https://www.youtube.com/watch?v=zURzynVgfRo");
+let gameOverAudio = new Audio("./gameOverAudio.mp3");
 gameOverAudio.volume = 0.2;
 //----------------------------------------------------------------
 //                            VARIABLES
@@ -67,7 +67,7 @@ function drawEarth() {
 function handleStart() {
   startScreen.style.display = "none";
   canvas.style.display = "flex";
-  gameAudio.play;
+  gameAudio.play();
   drawEarth();
   game();
 }
@@ -106,6 +106,8 @@ function game() {
   animationCount++;
   if (animationCount == 60) {
     paintAsteroid = false;
+    hitAsteroidAudio.pause();
+    hitAsteroidAudio.currentTime = 0;
     animationCount = 0;
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -183,6 +185,8 @@ function game() {
     gameAudio.pause();
     gameOverAudio.play();
     showGameOver();
+    let span = document.querySelector("span");
+    span.innerHTMl = `YOUR SCORE: ${score}`;
   } else {
     intervalId = requestAnimationFrame(game);
   }
@@ -202,6 +206,18 @@ startBtn.addEventListener("click", () => {
 });
 
 restartBtn.addEventListener("click", () => {
+  //reset the variables
+  // reset the score
+  // reset the gameOver
+  //reset asteroids = []
+  //call createAsteroaids(8)
+  score = 0;
+  isgameOver = false;
+  asteroids = [];
+  paintAsteroid = true;
+  createAsteroids(6);
+  gameOverScreen.style.display = "none";
+  canvas.style.display = "flex";
   handleStart();
 });
 
@@ -214,6 +230,3 @@ canvas.addEventListener("mousedown", (event) => {
 canvas.addEventListener("mouseup", (event) => {
   isMousePressed = false;
 });
-
-let span = document.querySelector("span");
-span.innerHTMl = `YOUR SCORE: ${score}`;
