@@ -211,6 +211,7 @@ restartBtn.addEventListener("click", () => {
   // reset the gameOver
   //reset asteroids = []
   //call createAsteroaids(8)
+  let intervalId = 0;
   score = 0;
   isgameOver = false;
   asteroids = [];
@@ -218,6 +219,7 @@ restartBtn.addEventListener("click", () => {
   createAsteroids(6);
   gameOverScreen.style.display = "none";
   canvas.style.display = "flex";
+  gameOverAudio.pause();
   handleStart();
 });
 
