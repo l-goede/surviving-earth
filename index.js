@@ -1,22 +1,3 @@
-// class Asteroid {
-//   constructor() {
-//     this.image = image;
-//     this.sound = 0;
-//     this.size = Math.floor(Math.random() * 70) + 30;
-//     this.x = Math.floor(Math.random() * (ctx.canvas.width - this.size));
-//     this.y = Math.floor(Math.random() * (ctx.canvas.height - this.size));
-//   }
-
-//   drawAsteroid() {
-//     this.image = new Image();
-//     this.image.src = "./images/asteroid.png";
-//   }
-
-//   drawSelf() {
-//     ctx.drawImage(this.virusImg, this.x, this.y, this.size, this.size);
-//   }
-// }
-
 //----------------------------------------------------------------
 //                            DECLARATION
 //----------------------------------------------------------------
@@ -24,9 +5,9 @@
 let startScreen = document.querySelector(".startScreen");
 let startBtn = document.querySelector("#start");
 let restartBtn = document.querySelector("#restart");
-let gameOverScreen = document.querySelector(".gameOver");
+let gameOverScreen = document.querySelector(".gameOverScr");
 let canvas = document.querySelector("#gameScreen");
-canvas.style.border = "2px solid red";
+canvas.style.background = "white";
 let ctx = canvas.getContext("2d");
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -42,6 +23,11 @@ asteroid.src = "./images/asteroid.png";
 
 let dust = new Image();
 dust.src = "./images/dust.png";
+
+//----------------------------------------------------------------
+//                            AUDIO
+//----------------------------------------------------------------
+
 //----------------------------------------------------------------
 //                            VARIABLES
 //----------------------------------------------------------------
@@ -49,18 +35,21 @@ dust.src = "./images/dust.png";
 let intervalId = 0;
 let isGameOver = false;
 let score = 0;
-let earthX = 380,
-  earthY = 200;
+let earthX = canvas.width / 2.3,
+  earthY = canvas.height / 3;
 let asteroidX = 250,
   asteroidY = 50;
-let asteroidWidth = 80,
-  asteroidHeight = 80;
+let asteroidWidth = 55,
+  asteroidHeight = 55;
 let earthWidth = 100,
   earthHeight = 100;
 let speedX = 0.9,
   speedY = 0.9;
-
 let isMousePressed = false;
+let dustX = 300,
+  dustY = 300;
+let dustWidth = 200,
+  dustHeight = 200;
 
 //----------------------------------------------------------------
 //                           FUNCTIONS
@@ -69,9 +58,6 @@ let isMousePressed = false;
 function drawEarth() {
   ctx.drawImage(earth, earthX, earthY, earthWidth, earthHeight);
 }
-//function drawDust(){
-//  ctx.drawImage(dust, dustX, dustY,dustWidth, dustHeight);
-//}
 
 function handleStart() {
   startScreen.style.display = "none";
@@ -84,46 +70,42 @@ function showGameOver() {
   canvas.style.display = "none";
   gameOverScreen.style.display = "block";
 }
-// let asteroids = [
-//   {
-//     x: 0,
-//     y: 0,
-//     speedX: Math.round(Math.random() * 4),
-//     speedY: Math.round(Math.random() * 4),
-//     direction: Math.random() * 360,
-//   },
-//   { x: 200, y: 0, speedX: 1, speedY: 1, direction: Math.random() * 360 },
-//   {
-//     x: Math.random() * 300,
-//     y: Math.random() * 300,
-//     speedX: 1,
-//     speedY: 1,
-//     direction: Math.random() * 360,
-//   },
-// ];
+let inititalAsteroidCount = 8;
 let asteroids = [];
 let myEvent = {};
-
-for (let i = 0; i < 5; i++) {
-  let randomAsteroid = {
-    speedX: Math.round(Math.random() * 4),
-    speedY: Math.round(Math.random() * 4),
-    direction: Math.random() * 360,
-  };
-  if (Math.random() < 0.5) {
-    randomAsteroid.x = -asteroidWidth;
-    randomAsteroid.y =
-      Math.round(Math.random() * canvas.height) + canvas.height;
-  } else {
-    randomAsteroid.y = -asteroidHeight;
-    randomAsteroid.x = Math.round(Math.random() * canvas.width) + canvas.width;
+let paintAsteroid = false;
+function createAsteroids(asteroidCount) {
+  for (let i = 0; i < asteroidCount; i++) {
+    let randomAsteroid = {
+      speedX: Math.round(Math.random() * 2.5),
+      speedY: Math.round(Math.random() * 2.5),
+      direction: Math.random() * 360,
+    };
+    if (Math.random() < 0.5) {
+      randomAsteroid.x = -asteroidWidth;
+      randomAsteroid.y =
+        Math.round(Math.random() * canvas.height) + canvas.height;
+    } else {
+      randomAsteroid.y = -asteroidHeight;
+      randomAsteroid.x =
+        Math.round(Math.random() * canvas.width) + canvas.width;
+    }
+    asteroids.push(randomAsteroid);
   }
-  asteroids.push(randomAsteroid);
 }
-
+createAsteroids(inititalAsteroidCount);
+let animationCount = 0;
 function game() {
+  animationCount++;
+  if (animationCount == 60) {
+    paintAsteroid = false;
+    animationCount = 0;
+  }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawEarth();
+  if (paintAsteroid) {
+    ctx.drawImage(dust, dustX, dustY, dustWidth, dustHeight);
+  }
   for (i = 0; i < asteroids.length; i++) {
     ctx.drawImage(
       asteroid,
@@ -150,18 +132,24 @@ function game() {
         canvasY > asteroids[i].y &&
         canvasY < asteroids[i].y + asteroidHeight
       ) {
+        dustX = asteroids[i].x;
+        dustY = asteroids[i].y;
+        paintAsteroid = true;
         score++;
 
-        asteroids[i].speedX = Math.round(Math.random() * 3.5);
-        asteroids[i].speedY = Math.round(Math.random() * 3.5);
-        // asteroids[i].x = -Math.round((Math.random() * canvas.width) / 5);
-        // asteroids[i].y = -Math.round((Math.random() * canvas.height) / 5);
+        asteroids[i].speedX = Math.round(Math.random() * 2.5 + 0.3);
+        asteroids[i].speedY = Math.round(Math.random() * 2.5 + 0.3);
+
+        if (score % 10 == 0) {
+          createAsteroids(10);
+          console.log("hello");
+        }
+
         if (Math.random() < 0.5) {
           asteroids[i].x = -asteroidWidth;
           asteroids[i].y = Math.round(Math.random() * canvas.height);
         } else {
           asteroids[i].y = -asteroidHeight;
-
           asteroids[i].x = Math.round(Math.random() * canvas.width);
         }
       }
@@ -178,7 +166,8 @@ function game() {
   }
 
   ctx.fillStyle = "white";
-  ctx.fillText(`Your score:${score}`, 200, 500);
+  ctx.font = "18px Roboto Mono";
+  ctx.fillText(`Your score:${score}`, 10, 20);
 
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
@@ -215,3 +204,6 @@ canvas.addEventListener("mousedown", (event) => {
 canvas.addEventListener("mouseup", (event) => {
   isMousePressed = false;
 });
+
+let span = document.querySelector("span");
+span.innerHTMl = `YOUR SCORE: ${score}`;
