@@ -7,7 +7,7 @@ let startBtn = document.querySelector("#start");
 let restartBtn = document.querySelector("#restart");
 let gameOverScreen = document.querySelector(".gameOverScr");
 let canvas = document.querySelector("#gameScreen");
-canvas.style.background = "white";
+canvas.style.background = "black";
 let ctx = canvas.getContext("2d");
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -35,21 +35,21 @@ dust.src = "./images/dust.png";
 let intervalId = 0;
 let isGameOver = false;
 let score = 0;
-let earthX = canvas.width / 2.3,
-  earthY = canvas.height / 3;
+let earthX = canvas.width / 2,
+  earthY = canvas.height / 2.5;
+let earthWidth = 100,
+  earthHeight = 100;
 let asteroidX = 250,
   asteroidY = 50;
 let asteroidWidth = 55,
   asteroidHeight = 55;
-let earthWidth = 100,
-  earthHeight = 100;
 let speedX = 0.9,
   speedY = 0.9;
 let isMousePressed = false;
 let dustX = 300,
   dustY = 300;
-let dustWidth = 200,
-  dustHeight = 200;
+let dustWidth = 55,
+  dustHeight = 55;
 
 //----------------------------------------------------------------
 //                           FUNCTIONS
@@ -137,12 +137,11 @@ function game() {
         paintAsteroid = true;
         score++;
 
-        asteroids[i].speedX = Math.round(Math.random() * 2.5 + 0.3);
-        asteroids[i].speedY = Math.round(Math.random() * 2.5 + 0.3);
+        asteroids[i].speedX = Math.round(Math.random() * 2.5);
+        asteroids[i].speedY = Math.round(Math.random() * 2.5);
 
         if (score % 10 == 0) {
-          createAsteroids(10);
-          console.log("hello");
+          createAsteroids(6);
         }
 
         if (Math.random() < 0.5) {
@@ -164,9 +163,9 @@ function game() {
       isGameOver = true;
     }
   }
-
+  // display score
   ctx.fillStyle = "white";
-  ctx.font = "18px Roboto Mono";
+  ctx.font = "20px Roboto Mono";
   ctx.fillText(`Your score:${score}`, 10, 20);
 
   if (isGameOver) {
@@ -184,7 +183,6 @@ function game() {
 window.addEventListener("load", () => {
   canvas.style.display = "none";
   gameOverScreen.style.display = "none";
-  handleStart();
 });
 
 startBtn.addEventListener("click", () => {
