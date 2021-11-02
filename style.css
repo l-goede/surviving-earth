@@ -1,3 +1,7 @@
+html {
+  display: flex;
+}
+
 body {
   color: white;
   font-family: "Roboto Mono", monospace;

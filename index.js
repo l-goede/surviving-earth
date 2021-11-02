@@ -27,7 +27,12 @@ dust.src = "./images/dust.png";
 //----------------------------------------------------------------
 //                            AUDIO
 //----------------------------------------------------------------
-
+let gameAudio = new Audio("https://youtu.be/GeEbOKKcW-0");
+gameAudio.volume = 0.1;
+let hitAsteroidAudio = new Audio("https://youtu.be/bhZs3ALdL7Y");
+hitAsteroidAudio.volume = 0.2;
+let gameOverAudio = new Audio("https://www.youtube.com/watch?v=zURzynVgfRo");
+gameOverAudio.volume = 0.2;
 //----------------------------------------------------------------
 //                            VARIABLES
 //----------------------------------------------------------------
@@ -61,19 +66,21 @@ function drawEarth() {
 
 function handleStart() {
   startScreen.style.display = "none";
-  canvas.style.display = "block";
+  canvas.style.display = "flex";
+  gameAudio.play;
   drawEarth();
   game();
 }
 
 function showGameOver() {
   canvas.style.display = "none";
-  gameOverScreen.style.display = "block";
+  gameOverScreen.style.display = "flex";
 }
 let inititalAsteroidCount = 8;
 let asteroids = [];
 let myEvent = {};
 let paintAsteroid = false;
+
 function createAsteroids(asteroidCount) {
   for (let i = 0; i < asteroidCount; i++) {
     let randomAsteroid = {
@@ -121,6 +128,8 @@ function game() {
     asteroids[i].x += asteroids[i].speedX * Math.cos(angle);
     asteroids[i].y += asteroids[i].speedY * Math.sin(angle);
 
+    //Mouse click on asteroid- collision
+
     if (isMousePressed) {
       const canvasLeft = canvas.offsetLeft + canvas.clientLeft;
       const canvasTop = canvas.offsetTop + canvas.clientTop;
@@ -136,6 +145,7 @@ function game() {
         dustY = asteroids[i].y;
         paintAsteroid = true;
         score++;
+        hitAsteroidAudio.play();
 
         asteroids[i].speedX = Math.round(Math.random() * 2.5);
         asteroids[i].speedY = Math.round(Math.random() * 2.5);
@@ -170,6 +180,8 @@ function game() {
 
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
+    gameAudio.pause();
+    gameOverAudio.play();
     showGameOver();
   } else {
     intervalId = requestAnimationFrame(game);
