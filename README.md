@@ -97,17 +97,10 @@ Definition of the different states and their transition (transition functions)
 
 ## Links
 
-### Trello
-
-[Link url]()
-
-### Git
-
 URls for the project repo and deploy
-[Link Repo](https://github.com/l-goede/surviving earth)
-[Link Deploy]()
+[Repo](https://github.com/l-goede/surviving earth)
+[Game](https://l-goede.github.io/surviving-earth/)
 
 ### Slides
 
-URls for the project presentation (slides)
-[Link Slides.com]()
+[Project presentation] (https://docs.google.com/presentation/d/1SD9l5ZXs7N8Ts6TwTwtMXGvqA-bsNa9RsthabSkUW7E/edit?usp=sharing)

@@ -1,8 +1,7 @@
 html {
   display: flex;
   height: 100%;
-  cursor: url("http://upload.wikimedia.org/wikipedia/commons/d/de/POL_apple.http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
-    pointer;
+  cursor: url("./images/targetPointer.png"), auto;
 }
 
 body {
@@ -18,8 +17,6 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  cursor: url("http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
-    pointer;
 }
 
 .startScreen {
@@ -28,8 +25,6 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
-  cursor: url("http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
-    pointer;
 }
 
 h1 {
