@@ -27,12 +27,14 @@ dust.src = "./images/dust.png";
 //----------------------------------------------------------------
 //                            AUDIO
 //----------------------------------------------------------------
+
 let gameAudio = new Audio("./gameAudio.mp3");
 gameAudio.volume = 0.04;
 let hitAsteroidAudio = new Audio("./hitAsteroidAudio.mp3");
 hitAsteroidAudio.volume = 0.2;
 let gameOverAudio = new Audio("./gameOverAudio.mp3");
 gameOverAudio.volume = 0.2;
+
 //----------------------------------------------------------------
 //                            VARIABLES
 //----------------------------------------------------------------
@@ -45,8 +47,8 @@ let earthX = canvas.width / 2,
 let earthWidth = 100,
   earthHeight = 100;
 
-let asteroidWidth = 55,
-  asteroidHeight = 55;
+let asteroidWidth = 59,
+  asteroidHeight = 59;
 let speedX = 0.9,
   speedY = 0.9;
 let isMousePressed = false;
