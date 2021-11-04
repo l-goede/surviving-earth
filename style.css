@@ -1,7 +1,6 @@
 html {
   display: flex;
   height: 100%;
-  cursor: url("./images/targetPointer.png"), auto;
 }
 
 body {
@@ -95,5 +94,5 @@ span {
 }
 
 canvas {
-  cursor: url("./images/targetPointer.png");
+  cursor: url("./images/targetPointer.png"), pointer;
 }
