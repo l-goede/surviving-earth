@@ -97,10 +97,11 @@ Definition of the different states and their transition (transition functions)
 
 ## Links
 
-URls for the project repo and deploy
-[Repo](https://github.com/l-goede/surviving-earth)
-[Game](https://l-goede.github.io/surviving-earth/)
+URls for the project repo and deploy:
+
+- [Repo](https://github.com/l-goede/surviving-earth)
+- [Game](https://l-goede.github.io/surviving-earth/)
 
 ### Slides
 
-[Project presentation] (https://docs.google.com/presentation/d/1SD9l5ZXs7N8Ts6TwTwtMXGvqA-bsNa9RsthabSkUW7E/edit?usp=sharing)
+- [Project Presentation](https://docs.google.com/presentation/d/1SD9l5ZXs7N8Ts6TwTwtMXGvqA-bsNa9RsthabSkUW7E/edit?usp=sharing)
