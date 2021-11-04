@@ -44,8 +44,7 @@ let earthX = canvas.width / 2,
   earthY = canvas.height / 2.5;
 let earthWidth = 100,
   earthHeight = 100;
-let asteroidX = 250,
-  asteroidY = 50;
+
 let asteroidWidth = 55,
   asteroidHeight = 55;
 let speedX = 0.9,
@@ -67,7 +66,9 @@ function drawEarth() {
 function handleStart() {
   startScreen.style.display = "none";
   canvas.style.display = "flex";
+  gameAudio.currentTime = 0;
   gameAudio.play();
+  gameAudio.loop = true;
   drawEarth();
   game();
 }
@@ -147,6 +148,7 @@ function game() {
         dustY = asteroids[i].y;
         paintAsteroid = true;
         score++;
+        hitAsteroidAudio.currentTime = 0;
         hitAsteroidAudio.play();
 
         asteroids[i].speedX = Math.round(Math.random() * 2.5);
@@ -186,7 +188,7 @@ function game() {
     gameOverAudio.play();
     showGameOver();
     let span = document.querySelector("span");
-    span.innerHTMl = `YOUR SCORE: ${score}`;
+    span.innerHTML = `YOUR SCORE: ${score}`;
   } else {
     intervalId = requestAnimationFrame(game);
   }
@@ -211,15 +213,15 @@ restartBtn.addEventListener("click", () => {
   // reset the gameOver
   //reset asteroids = []
   //call createAsteroaids(8)
-  let intervalId = 0;
+
   score = 0;
-  isgameOver = false;
+  isGameOver = false;
   asteroids = [];
-  paintAsteroid = true;
+  paintAsteroid = false;
   createAsteroids(6);
   gameOverScreen.style.display = "none";
   canvas.style.display = "flex";
-  gameOverAudio.pause();
+  // gameOverAudio.pause();
   handleStart();
 });
 

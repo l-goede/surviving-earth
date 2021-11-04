@@ -1,6 +1,8 @@
 html {
   display: flex;
   height: 100%;
+  cursor: url("http://upload.wikimedia.org/wikipedia/commons/d/de/POL_apple.http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
+    pointer;
 }
 
 body {
@@ -16,6 +18,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  cursor: url("http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
+    pointer;
 }
 
 .startScreen {
@@ -24,6 +28,8 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+  cursor: url("http://www.gravatar.com/avatar/06ededb95f1c0b1f4f9d987e06d7d82b?s=32&d=identicon&r=PG"),
+    pointer;
 }
 
 h1 {
@@ -39,9 +45,8 @@ h1 {
 
 button {
   margin-top: 2rem;
-  padding: 1em;
-  width: 10%;
-  height: 5%;
+  padding: 1rem;
+
   font-family: "Roboto Mono", monospace;
   font-weight: 900;
   letter-spacing: 0.4rem;
@@ -72,7 +77,6 @@ button:hover {
 
 #restart {
   margin: 1.5rem 0;
-  padding: 1rem;
   text-align: start;
 }
 
@@ -93,4 +97,8 @@ span {
 }
 .gameOverScr p {
   font-size: 1.5rem;
+}
+
+canvas {
+  cursor: url("./images/targetPointer.png");
 }
